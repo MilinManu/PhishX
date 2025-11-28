@@ -37,7 +37,7 @@ Follow these steps to set up PhishX locally.
 
 ### Step 1: Clone the Repository
 ```bash
-git clone [https://github.com/YOUR_USERNAME/phishing-website-detector.git](https://github.com/YOUR_USERNAME/phishing-website-detector.git)
+git clone [https://github.com/MilinManu/PhishX.git](https://github.com/MilinManu/PhishX.git)
 cd phishing-website-detector
 ```
 
