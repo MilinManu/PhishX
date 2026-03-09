@@ -1,0 +1,19 @@
+timestamp,url,user_rating
+2025-12-07T16:16:31.308921,https://Could not connect to the analysis server. Is it running?,Dangerous
+2025-12-07T16:16:54.879331,https://www.youtube.com/,Safe
+2025-12-07T16:56:13.725470,https://www.youtube.com/,Safe
+2025-12-07T16:56:15.229264,https://www.youtube.com/,Risky
+2025-12-07T16:56:15.842279,https://www.youtube.com/,Risky
+2025-12-07T16:56:16.403825,https://www.youtube.com/,Risky
+2025-12-07T16:56:17.504350,https://www.youtube.com/,Dangerous
+2025-12-07T16:56:17.652997,https://www.youtube.com/,Dangerous
+2025-12-07T16:56:17.879924,https://www.youtube.com/,Dangerous
+2025-12-07T17:09:24.484435,https://www.youtube.com/,Safe
+2025-12-07T17:09:25.251774,https://www.youtube.com/,Safe
+2025-12-07T17:25:27.540542,https://drive.usercontent.google.com/download?id=18J9sTgF75x1j6rD2RMWL2dlEycOx1j2H&export=download&authuser=0,Risky
+2025-12-07T17:25:28.121328,https://drive.usercontent.google.com/download?id=18J9sTgF75x1j6rD2RMWL2dlEycOx1j2H&export=download&authuser=0,Risky
+2025-12-07T18:05:42.262927,https://www.youtube.com/shorts/fJNNeuhFjH4,Safe
+2025-12-07T18:06:02.600237,https://drive.usercontent.google.com/download?id=18J9sTgF75x1j6rD2RMWL2dlEycOx1j2H&export=download&authuser=0,Risky
+2025-12-07T18:07:16.404333,https://drive.usercontent.google.com/download?id=18J9sTgF75x1j6rD2RMWL2dlEycOx1j2H&export=download&authuser=0,Risky
+2025-12-07T18:10:35.118348,https://www.youtube.com/shorts/fJNNeuhFjH4,Dangerous
+2025-12-07T18:13:03.752628,https://www.youtube.com/shorts/fJNNeuhFjH4,Safe

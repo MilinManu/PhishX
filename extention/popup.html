@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>PHISHX – Live Threat Analysis</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="phx-body">
+    <!-- Animated starfield canvas -->
+    <canvas id="starfield"></canvas>
+    
+    <div class="phx-root">
+      <!-- Top nav bar -->
+      <header class="phx-nav">
+        <div class="phx-logo-text">
+          <span class="phx-logo-main">PHISH</span><span class="phx-logo-accent">X</span>
+        </div>
+      </header>
+
+      <!-- Main console -->
+      <main class="phx-main">
+        <div class="phx-section-label">SECURITY CONSOLE</div>
+        <h1 class="phx-title">Live Threat Analysis</h1>
+
+        <div class="phx-card">
+          <!-- URL row -->
+          <div class="phx-url-row">
+            <span class="phx-url-label">SECURE CONNECTION</span>
+            <div id="url" class="phx-url-value">Detecting current tab…</div>
+          </div>
+
+          <!-- Status + score -->
+          <div class="phx-status-row">
+            <div id="statusSummary"></div>
+            <div id="scoreRing" class="phx-score-wrapper">
+              <!-- score circle is injected by JS -->
+            </div>
+          </div>
+
+          <!-- Details text -->
+          <div id="details" class="phx-details">
+            Waiting for scan result…
+          </div>
+
+          <!-- Warnings list -->
+          <ul id="warnings" class="phx-warnings"></ul>
+
+          <!-- Actions -->
+          <div class="phx-actions">
+            <button id="checkBtn" class="phx-btn phx-btn-primary">
+              <span class="phx-btn-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 4 23 10 17 10"></polyline>
+                  <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                </svg>
+              </span>
+              <span>SCAN</span>
+            </button>
+            <button id="advancedToggle" class="phx-btn phx-btn-ghost">
+              <span>RAW DATA</span>
+            </button>
+          </div>
+
+          <!-- Advanced JSON block -->
+          <pre id="advancedContent" class="phx-advanced"></pre>
+        </div>
+      </main>
+
+      <footer class="phx-footer">
+        <div class="phx-status-indicator">
+          <div class="phx-dot phx-dot-online"></div>
+          <span class="phx-footer-text">ENGINE READY</span>
+        </div>
+      </footer>
+    </div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
