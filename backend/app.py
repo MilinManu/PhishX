@@ -756,7 +756,11 @@ if __name__ == '__main__':
     else:
         print("❌ Models failed to load - check error messages above")
     print("="*60)
-    print("🌐 Server running on http://localhost:5000")
-    print("="*60 + "\n")
     
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    import os
+    port = int(os.environ.get("PORT", 5000))
+
+    print(f"🌐 Server running on port {port}")
+    print("="*60 + "\n")
+
+    app.run(host="0.0.0.0", port=port)
