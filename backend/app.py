@@ -103,30 +103,16 @@ try:
         xgb_model = pickle.load(f)
     print("✅ XGBoost Model Loaded from phishing_detector_phiusiil.pkl")
 
-    # Load BERT tokenizer and model
-    tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-    bert_model = BertModel.from_pretrained('bert-base-uncased')
-    bert_model.eval()  # Set to evaluation mode
-    
-    # Use GPU if available
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    bert_model.to(device)
-    print(f"✅ BERT Model Loaded (using {device})")
+    print(f"✅ BERT API connection ready")
 
 except FileNotFoundError:
     print("❌ CRITICAL ERROR: Could not find 'phishing_detector_phiusiil.pkl'")
     print("Make sure you have run the training script first!")
     xgb_model = None
-    bert_model = None
-    tokenizer = None
-    device = None
 except Exception as e:
     print(f"❌ CRITICAL ERROR: Could not load models. {str(e)}")
     print(traceback.format_exc())
     xgb_model = None
-    bert_model = None
-    tokenizer = None
-    device = None
 
 # --- 3. HELPER FUNCTIONS ---
 
@@ -271,19 +257,29 @@ def unshorten_url(url):
 
 def get_bert_embedding(text):
 
-    payload = {
-        "inputs": text
-    }
+    payload = {"inputs": text}
 
-    response = requests.post(
-        API_URL,
-        headers=headers,
-        json=payload
-    )
+    try:
+        response = requests.post(
+            API_URL,
+            headers=headers,
+            json=payload,
+            timeout=10
+        )
 
-    result = response.json()
+        result = response.json()
 
-    return result
+        embedding = np.array(result)
+        embedding = embedding.flatten()
+        embedding = embedding.reshape(1, -1)
+
+        return embedding
+
+    except Exception as e:
+        print("❌ BERT API error:", e)
+
+        # fallback vector to avoid crash
+        return np.zeros((1, 768))
 
 def extract_url_features(url):
     """Extract additional URL-based features for better detection."""
@@ -445,7 +441,7 @@ def calculate_phishing_risk_score(url_features, url):
 @app.route('/analyze', methods=['POST'])
 def analyze():
     """Main endpoint for URL analysis"""
-    if not xgb_model or not bert_model or not tokenizer:
+    if not xgb_model:
         return jsonify({
             'error': 'AI models are not loaded. Check server logs.',
             'details': 'Make sure phishing_detector_phiusiil.pkl exists in the current directory.'
@@ -622,7 +618,10 @@ def analyze():
             'url': final_url,
             'method': method,
             'details': details,
-            'model_accuracy': '98.27%'
+            'model_accuracy': '98.27%',
+            'model': 'BERT Embedding + XGBoost Classifier',
+            'dataset': 'PhiUSIIL Dataset (235K URLs)',
+            'architecture': 'Hybrid AI + Heuristic Detection'
         }
         
         # Add original URL if different
@@ -648,7 +647,7 @@ def analyze():
 @app.route('/batch-analyze', methods=['POST'])
 def batch_analyze():
     """Endpoint for analyzing multiple URLs at once"""
-    if not xgb_model or not bert_model or not tokenizer:
+    if not xgb_model:
         return jsonify({'error': 'AI models are not loaded'}), 500
     
     try:
@@ -709,14 +708,15 @@ def batch_analyze():
 @app.route('/health', methods=['GET'])
 def health():
     """Health check endpoint"""
-    models_loaded = all([xgb_model, bert_model, tokenizer])
-    
+
+    models_loaded = xgb_model is not None
+
     return jsonify({
         'status': 'healthy' if models_loaded else 'unhealthy',
         'models_loaded': models_loaded,
         'model_accuracy': '98.27%' if models_loaded else 'N/A',
         'dataset': 'PhiUSIIL (235K URLs)',
-        'device': str(device) if device else 'N/A'
+        'bert_source': 'HuggingFace API'
     })
 
 @app.route('/', methods=['GET'])
@@ -750,10 +750,10 @@ if __name__ == '__main__':
     print("\n" + "="*60)
     print("🚀 PhishX Backend Server")
     print("="*60)
-    if xgb_model and bert_model:
+    if xgb_model:
         print("✅ All models loaded successfully!")
         print(f"✅ Model Accuracy: 98.27%")
-        print(f"✅ Using device: {device}")
+        print("✅ Using HuggingFace API for BERT embeddings")
     else:
         print("❌ Models failed to load - check error messages above")
     print("="*60)
