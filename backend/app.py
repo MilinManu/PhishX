@@ -1,12 +1,18 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import os
+import requests
 import traceback
 import pickle
-import torch
 import requests
 import numpy as np
 from urllib.parse import urlparse
-from transformers import BertTokenizer, BertModel
+
+API_URL = "https://router.huggingface.co/hf-inference/models/google-bert/bert-base-uncased"
+
+headers = {
+    "Authorization": f"Bearer {os.getenv('HF_TOKEN')}"
+}
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for React Frontend
@@ -263,26 +269,21 @@ def unshorten_url(url):
     except:
         return url
 
-def get_bert_embedding(url):
-    """Converts URL string into a 768-dimensional vector using BERT."""
-    # Tokenize
-    inputs = tokenizer(
-        [url], 
-        padding=True, 
-        truncation=True, 
-        max_length=128, 
-        return_tensors="pt"
+def get_bert_embedding(text):
+
+    payload = {
+        "inputs": text
+    }
+
+    response = requests.post(
+        API_URL,
+        headers=headers,
+        json=payload
     )
-    
-    # Move to device
-    inputs = {key: val.to(device) for key, val in inputs.items()}
-    
-    # Get Embeddings
-    with torch.no_grad():
-        outputs = bert_model(**inputs)
-        
-    # Extract [CLS] token (first vector) - shape: (1, 768)
-    return outputs.last_hidden_state[:, 0, :].cpu().numpy()
+
+    result = response.json()
+
+    return result
 
 def extract_url_features(url):
     """Extract additional URL-based features for better detection."""
