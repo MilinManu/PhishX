@@ -2,12 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   Link, Loader2, History, AlertTriangle, CheckCircle, 
   Shield, Trash2, Zap, Globe, Lock, ShieldCheck, 
-  CreditCard, Eye, Menu, Chrome, Twitter, Github,
+  CreditCard, Eye, Menu, Chrome, Twitter, Github, Linkedin,
   BrainCircuit, ThumbsUp, FileKey, MousePointer2, ChevronDown
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion'; 
 import StarryBackground from './StarryBackground';
 import { ReactLenis } from 'lenis/react';
+import { Link as RouterLink } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
 
 export default function App() {
   // === STATE ===
@@ -432,53 +436,100 @@ function ScrollFeatures() {
          viewport={{ once: false, margin: "-50px" }}
          className="mt-32 w-full max-w-md px-4"
        >
-          <button className="w-full bg-white text-black hover:bg-gray-200 font-bold py-4 px-6 rounded-lg shadow-xl transition-all flex items-center justify-center mx-auto text-sm tracking-wide">
-            <Chrome className="w-5 h-5 mr-3" /> ADD TO CHROME FOR FREE
-          </button>
+      <a
+        href="/phishx-extension.zip"
+        download
+        className="w-full bg-white text-black hover:bg-gray-200 font-bold py-4 px-6 rounded-lg shadow-xl transition-all flex items-center justify-center mx-auto text-sm tracking-wide">
+        <Chrome className="w-5 h-5 mr-3" /> ADD TO CHROME FOR FREE
+      </a>
        </motion.div>
     </div>
   );
 }
 
-function Navbar({ onScanClick }) {
-  return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/5 h-16">
-      <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <ShieldCheck className="w-5 h-5 text-blue-500" />
-          <span className="text-sm font-bold tracking-widest text-white">PHISH<span className="text-blue-500">X</span></span>
-        </div>
-        <div className="flex items-center space-x-6 text-xs font-medium text-gray-400">
-          <button onClick={onScanClick} className="hover:text-white transition-colors">Scanner</button>
-          <a href="#" className="hover:text-white transition-colors">API</a>
-          <a href="#" className="hover:text-white transition-colors">About</a>
-        </div>
-      </div>
-    </nav>
-  );
-}
+// function Navbar({ onScanClick }) {
+//   return (
+//     <nav className="fixed top-0 left-0 w-full z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/5 h-16">
+//       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+//         <div className="flex items-center space-x-2">
+//           <ShieldCheck className="w-5 h-5 text-blue-500" />
+//           <span className="text-sm font-bold tracking-widest text-white">PHISH<span className="text-blue-500">X</span></span>
+//         </div>
+//         <div className="flex items-center space-x-6 text-xs font-medium text-gray-400">
 
-function Footer() {
-  return (
-    <footer className="w-full border-t border-white/5 bg-[#020202] py-12 mt-auto relative z-20">
-      <div className="w-full px-8 flex flex-col md:flex-row items-center justify-between">
-        <div className="flex items-center space-x-2 mb-4 md:mb-0">
-          <ShieldCheck className="w-5 h-5 text-gray-600" />
-          <span className="text-xs font-bold text-gray-500 tracking-widest">PHISHX SECURITY LABS</span>
-        </div>
-        <div className="flex space-x-8 text-[10px] text-gray-600 uppercase tracking-wider font-medium">
-          <a href="#" className="hover:text-white transition-colors">Privacy Protocol</a>
-          <a href="#" className="hover:text-white transition-colors">Service Terms</a>
-          <a href="#" className="hover:text-white transition-colors">Developer API</a>
-        </div>
-        <div className="flex space-x-6 mt-4 md:mt-0">
-          <Twitter className="w-4 h-4 text-gray-600 hover:text-white cursor-pointer transition-colors" />
-          <Github className="w-4 h-4 text-gray-600 hover:text-white cursor-pointer transition-colors" />
-        </div>
-      </div>
-    </footer>
-  );
-}
+//           <button
+//             onClick={onScanClick}
+//             className="hover:text-white transition-colors">
+//             Scanner
+//           </button>
+
+//           {/* <a href="#" className="hover:text-white transition-colors">
+//             API
+//           </a> */}
+
+//           <RouterLink
+//             to="/about"
+//             className="hover:text-white transition-colors">
+//             About
+//           </RouterLink>
+
+//           {/* ADD EXTENSION BUTTON */}
+//           <a
+//             href="/phishx-extension.zip"
+//             download
+//             className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-md text-xs font-bold transition">
+//             Add Extension
+//           </a>
+
+//         </div>
+//       </div>
+//     </nav>
+//   );
+// }
+
+// function Footer() {
+//   return (
+//     <footer className="w-full border-t border-white/5 bg-[#020202] py-14 mt-auto relative z-20">
+
+//       <div className="max-w-7xl mx-auto px-8 flex flex-col items-center justify-center space-y-6 text-center">
+
+//         {/* LOGO */}
+//         <div className="flex items-center space-x-2">
+//           <ShieldCheck className="w-6 h-6 text-gray-500" />
+//           <span className="text-sm font-bold text-gray-400 tracking-widest">
+//             PHISHX SECURITY LABS
+//           </span>
+//         </div>
+
+//         {/* COPYRIGHT */}
+//         <p className="text-xs text-gray-500 tracking-wide">
+//           © {new Date().getFullYear()} PhishX • AI Phishing Website Detector
+//         </p>
+
+//         {/* SOCIAL LINKS */}
+//         <div className="flex space-x-8">
+
+//           <a
+//             href="https://linkedin.com/in/milin-manu"
+//             target="_blank"
+//           >
+//             <Linkedin className="w-5 h-5 text-gray-500 hover:text-white transition-colors" />
+//           </a>
+
+//           <a
+//             href="https://github.com/MilinManu/PhishX"
+//             target="_blank"
+//           >
+//             <Github className="w-5 h-5 text-gray-500 hover:text-white transition-colors" />
+//           </a>
+
+//         </div>
+
+//       </div>
+
+//     </footer>
+//   );
+// }
 
 function ResultCard({ result, onRating, currentRating, onReset }) {
   const { status, score, url } = result;
