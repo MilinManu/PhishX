@@ -46,6 +46,7 @@ export default function App() {
       await new Promise(resolve => setTimeout(resolve, 1000)); 
       
       const response = await fetch('https://phishing-website-backend-5sjv.onrender.com/analyze', {
+      // const response = await fetch('http://localhost:5000/analyze', {  
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: urlToAnalyze }),
@@ -105,6 +106,7 @@ export default function App() {
   const submitSafetyRating = async (urlToRate, rating) => {
     try {
       await fetch('https://phishing-website-backend-5sjv.onrender.com/rate', {
+      // await fetch('http://localhost:5000/rate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: urlToRate, user_rating: rating }),

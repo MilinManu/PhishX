@@ -270,15 +270,25 @@ def get_bert_embedding(text):
         result = response.json()
 
         embedding = np.array(result)
-        embedding = embedding.flatten()
+
+        # Handle nested HuggingFace output
+        if embedding.ndim == 3:
+            embedding = embedding[0][0]
+
+        elif embedding.ndim == 2:
+            embedding = embedding[0]
+
         embedding = embedding.reshape(1, -1)
+
+        # Safety check (your model expects 768 features)
+        if embedding.shape[1] != 768:
+            print("⚠️ Unexpected embedding shape:", embedding.shape)
+            return np.zeros((1, 768))
 
         return embedding
 
     except Exception as e:
         print("❌ BERT API error:", e)
-
-        # fallback vector to avoid crash
         return np.zeros((1, 768))
 
 def extract_url_features(url):
@@ -529,10 +539,13 @@ def analyze():
                 ]
             })
         
-        # Get BERT embedding
         embedding_vector = get_bert_embedding(final_url)
-        
-        # Get predictions
+
+        print("Embedding shape:", embedding_vector.shape)
+
+        if embedding_vector.shape[1] != 768:
+            raise ValueError(f"Feature shape mismatch, expected 768 got {embedding_vector.shape[1]}")
+
         probabilities = xgb_model.predict_proba(embedding_vector)[0]
         prediction = xgb_model.predict(embedding_vector)[0]
 
